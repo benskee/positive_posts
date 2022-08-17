@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify'
 import Joi from 'joi-browser';
+import schedule from 'node-schedule';
 import Form from './components/Form'
-import postDict from './posts/postDict'
 import { register, getUsers } from './services/userService'
+import UserCard from './components/UserCard';
 import 'bootstrap/dist/css/bootstrap.css';
 import "react-toastify/dist/ReactToastify.css";
 import './App.css';
-import UserCard from './components/UserCard';
 
 
 const App = () => {
@@ -23,13 +23,16 @@ const App = () => {
       email: Joi.string().required().max(255).email().label('Email'),
   }
 
+  useEffect(() => {
+    schedule.scheduleJob("*/5 * * * * *", function(){
+    console.log('scheduler')
+    })
+  }, [])
+
   const doSubmit = async () => {
         try {
             let res = await register(data);
-            let user = res.data
-            let usersCopy = [...users]
-            usersCopy.push(user)
-            setUsers(usersCopy)
+            setUsers(res.data)
             toast.success('User added!')
         } catch (err) {
             if(err.response && err.response.status === 400) {
@@ -37,6 +40,7 @@ const App = () => {
             const { type, message } = err.response.data
             newErrors[type] = message;
             setErrors({ newErrors })
+            toast.error(message)
             }
         }
     }
@@ -49,13 +53,6 @@ const App = () => {
         schema
     }
 
-    const choosePost = posts => {
-      let idx = Math.floor(Math.random() * posts.length)
-      console.log(idx)
-
-      return [posts.splice(idx, 1), posts]
-    }
-   
   return (
     <div className="App">
       <main>

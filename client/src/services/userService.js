@@ -8,6 +8,6 @@ export const register = async userInput => {
     return await axios.post(apiEndpoint, userInput);
 }
 
-export const getUsers = () => {
-    return axios.get(apiEndpoint);
-}
+// export const getUsers = () => {
+//     return axios.get(apiEndpoint);
+// }
