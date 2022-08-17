@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify'
 import Joi from 'joi-browser';
-import schedule from 'node-schedule';
 import Form from './components/Form'
 import { register, getUsers } from './services/userService'
 import UserCard from './components/UserCard';
@@ -22,12 +21,6 @@ const App = () => {
       username: Joi.string().allow('').max(255).label('Username'),
       email: Joi.string().required().max(255).email().label('Email'),
   }
-
-  useEffect(() => {
-    schedule.scheduleJob("*/5 * * * * *", function(){
-    console.log('scheduler')
-    })
-  }, [])
 
   const doSubmit = async () => {
         try {
