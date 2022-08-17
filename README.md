@@ -1,7 +1,7 @@
 In the client directory run `npm install`
 <br/>Then run `npm run start`
 
-<br/><br/><br/>
+<br/><br/>
 Open a second terminal in the server directory and run `npm install`
 
 This app requires a SendGrid account to send emails. You can create a free account at [sendgrid.com](https://sendgrid.com/)
